@@ -3,58 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuração do Bot</title>
+    <title>Style-Bots | Dashboard</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a2e; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background-color: #16213e; padding: 2rem; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); width: 350px; border: 1px solid #0f3460; }
-        h2 { text-align: center; color: #e94560; margin-bottom: 20px; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #95a5a6; }
-        input { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #0f3460; background: #0f3460; color: white; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #e94560; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        button:hover { background-color: #ff4d6d; }
-        .warning { font-size: 0.75rem; color: #f1c40f; margin-top: 15px; text-align: center; }
+        :root { --primary: #5865F2; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; }
+        body { font-family: sans-serif; background-color: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; align-items: center; }
+        
+        /* Navbar */
+        nav { width: 100%; padding: 1rem 2rem; background: #1e293b70; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
+        .logo { font-weight: bold; font-size: 1.5rem; color: var(--primary); }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 100px 20px; }
+        .btn-login { background-color: var(--primary); color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: 0.3s; }
+        .btn-login:hover { background-color: #4752c4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
+
+        /* Dashboard (Escondido antes do login) */
+        #dashboard { display: none; width: 90%; max-width: 800px; padding: 20px; }
+        .config-card { background: var(--card); padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid #334155; }
+        input, select { width: 100%; padding: 10px; margin-top: 8px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Dashboard Bot</h2>
-    
-    <div class="input-group">
-        <label for="bot-token">Token do Bot (Privado)</label>
-        <input type="password" id="bot-token" placeholder="Insira o token aqui...">
-    </div>
+    <nav>
+        <div class="logo">Style-Bots</div>
+        <div id="user-info"></div>
+    </nav>
 
-    <div class="input-group">
-        <label for="prefix">Prefixo do Comando</label>
-        <input type="text" id="prefix" placeholder="Ex: ! ou /">
-    </div>
+    <section class="hero" id="login-section">
+        <h1>Configure seu Bot de forma fácil</h1>
+        <p>Conecte sua conta do Discord para gerenciar seus servidores.</p>
+        <br>
+        <a href="COLOQUE_SEU_LINK_OAUTH2_AQUI" class="btn-login">Login com Discord</a>
+    </section>
 
-    <div class="input-group">
-        <label for="status">Status do Bot</label>
-        <input type="text" id="status" placeholder="Ex: Jogando algo...">
-    </div>
+    <section id="dashboard">
+        <h2>Bem-vindo, <span id="user-name">Usuário</span>!</h2>
+        
+        <div class="config-card">
+            <h3>Configurações Gerais</h3>
+            <label>Nome Visível do Bot no Site</label>
+            <input type="text" id="bot-name" placeholder="Ex: Style Music">
+            
+            <label>Prefixo dos Comandos</label>
+            <input type="text" id="prefix" placeholder="Ex: !">
+        </div>
 
-    <button onclick="saveConfig()">Salvar Configurações</button>
+        <div class="config-card">
+            <h3>Comandos Personalizados</h3>
+            <label>Comando: /ajuda</label>
+            <input type="text" id="cmd-help" placeholder="Resposta do bot...">
+            
+            <button onclick="saveData()" style="margin-top:20px; width:100%; padding:15px; background: #22c55e; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">
+                SALVAR ALTERAÇÕES
+            </button>
+        </div>
+    </section>
 
-    <p class="warning">⚠️ Nunca compartilhe a URL deste site se o token estiver preenchido.</p>
-</div>
+    <script>
+        // Lógica para verificar se o usuário voltou do Discord com o código
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
 
-<script>
-    function saveConfig() {
-        const config = {
-            token: document.getElementById('bot-token').value,
-            prefix: document.getElementById('prefix').value,
-            status: document.getElementById('status').value
-        };
+        if (code) {
+            // Se tem código na URL, esconde o login e mostra o dashboard
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            
+            // Aqui você enviaria o 'code' para o seu bot no Pydroid/Discloud 
+            // para validar quem é o usuário.
+            console.log("Código de autorização recebido:", code);
+        }
 
-        // Aqui você enviaria os dados para o seu banco de dados ou API
-        console.log("Configurações salvas:", config);
-        alert("Configurações enviadas! Verifique o console do navegador.");
-    }
-</script>
-
+        function saveData() {
+            alert("As configurações foram enviadas para o seu banco de dados!");
+            // Aqui entra a integração com Firebase ou sua API em Python
+        }
+    </script>
 </body>
-
 </html>
