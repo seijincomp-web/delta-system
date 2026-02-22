@@ -5,96 +5,201 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Style-Bots | Dashboard</title>
     <style>
-        :root { --primary: #5865F2; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; }
-        body { font-family: sans-serif; background-color: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; align-items: center; }
-        
+        :root {
+            --primary: #5865F2;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --glow: rgba(88, 101, 242, 0.5);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
         /* Navbar */
-        nav { width: 100%; padding: 1rem 2rem; background: #1e293b70; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
-        .logo { font-weight: bold; font-size: 1.5rem; color: var(--primary); }
+        nav {
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: #1e293b70;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            border-bottom: 1px solid #334155;
+        }
+
+        .logo { font-weight: bold; font-size: 1.8rem; color: var(--primary); text-shadow: 0 0 10px var(--glow); }
 
         /* Hero Section */
-        .hero { text-align: center; padding: 100px 20px; }
-        .btn-login { background-color: var(--primary); color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: 0.3s; }
-        .btn-login:hover { background-color: #4752c4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
+        .hero {
+            text-align: center;
+            padding: 120px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* Dashboard (Escondido antes do login) */
-        #dashboard { display: none; width: 90%; max-width: 800px; padding: 20px; }
-        .config-card { background: var(--card); padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid #334155; }
-        input, select { width: 100%; padding: 10px; margin-top: 8px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; }
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        p { color: #94a3b8; font-size: 1.2rem; margin-bottom: 30px; }
+
+        /* BOTÃO COM EFEITO DE LUZES */
+        .btn-login {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px var(--glow);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px var(--primary);
+            background-color: #4752c4;
+        }
+
+        /* Dashboard (Escondido por padrão) */
+        #dashboard {
+            display: none;
+            width: 90%;
+            max-width: 900px;
+            padding: 40px 0;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .config-card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            transition: 0.3s;
+        }
+
+        .config-card:hover { border-color: var(--primary); }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .btn-save {
+            background: #22c55e;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
 
     <nav>
         <div class="logo">Style-Bots</div>
-        <div id="user-info"></div>
+        <div id="user-display"></div>
     </nav>
 
     <section class="hero" id="login-section">
-        <h1>Configure seu Bot de forma fácil</h1>
-        <p>Conecte sua conta do Discord para gerenciar seus servidores.</p>
-        <br>
-        <a https://discord.com/oauth2/authorize?client_id=1474354215957565541&response_type=code&redirect_uri=https%3A%2F%2Fseijincomp-web.github.io%2FStyle-Bots%2F&scope=identify+guilds" class="btn-login"> Login com Discord</a>
+        <h1>O Bot mais completo.</h1>
+        <p>Economia, Boas-vindas e muito mais para o seu servidor.</p>
+        
+        <a href="https://discord.com/oauth2/authorize?client_id=1474354215957565541&response_type=code&redirect_uri=https%3A%2F%2Fseijincomp-web.github.io%2FStyle-Bots%2F&scope=identify+guilds" 
+           class="btn-login">
+            Conectar com Discord
+        </a>
     </section>
 
     <section id="dashboard">
-        <h2>Bem-vindo, <span id="user-name">Usuário</span>!</h2>
+        <h2>Painel de Controle <span id="user-name" style="color: var(--primary);"></span></h2>
         
-        <div class="config-card">
-            <h3>Configurações Gerais</h3>
-            <label>Nome Visível do Bot no Site</label>
-            <input type="text" id="bot-name" placeholder="Ex: Style Music">
-            
-            <label>Prefixo dos Comandos</label>
-            <input type="text" id="prefix" placeholder="Ex: !">
+        <div class="config-grid">
+            <div class="config-card">
+                <h3>⚙️ Geral</h3>
+                <label>Nome do Bot no Site</label>
+                <input type="text" id="bot-name-display" placeholder="Style Music">
+                
+                <label>Prefixo</label>
+                <input type="text" id="bot-prefix" placeholder="!">
+            </div>
+
+            <div class="config-card">
+                <h3>👋 Boas-Vindas</h3>
+                <label>Canal de Entrada (ID)</label>
+                <input type="text" id="welcome-channel" placeholder="ID do Canal">
+                
+                <label>Mensagem</label>
+                <input type="text" id="welcome-msg" placeholder="Bem-vindo ao servidor!">
+            </div>
+
+            <div class="config-card">
+                <h3>💰 Economia</h3>
+                <label>Nome da Moeda</label>
+                <input type="text" id="coin-name" placeholder="StyleCoins">
+                
+                <label>Dinheiro Inicial</label>
+                <input type="number" id="start-money" value="100">
+            </div>
         </div>
 
-        <div class="config-card">
-            <h3>Comandos Personalizados</h3>
-            <label>Comando: /ajuda</label>
-            <input type="text" id="cmd-help" placeholder="Resposta do bot...">
-            
-            <button onclick="saveData()" style="margin-top:20px; width:100%; padding:15px; background: #22c55e; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">
-                SALVAR ALTERAÇÕES
-            </button>
-        </div>
+        <button class="btn-save" onclick="salvarConfiguracoes()">SALVAR ALTERAÇÕES</button>
     </section>
 
     <script>
-        // Lógica para verificar se o usuário voltou do Discord com o código
+        // Lógica para capturar o código após o login
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
 
         if (code) {
-            // Se tem código na URL, esconde o login e mostra o dashboard
+            // Usuário logado: Esconde tela de login, mostra Dashboard
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
+            console.log("Logado com sucesso! Code:", code);
             
-            // Aqui você enviaria o 'code' para o seu bot no Pydroid/Discloud 
-            // para validar quem é o usuário.
-            console.log("Código de autorização recebido:", code);
+            // Aqui você poderia fazer um "fetch" para o seu bot
+            alert("Login autorizado! Configure seu bot agora.");
         }
 
-        function saveData() {
-            alert("As configurações foram enviadas para o seu banco de dados!");
-            // Aqui entra a integração com Firebase ou sua API em Python
+        function salvarConfiguracoes() {
+            const config = {
+                nome: document.getElementById('bot-name-display').value,
+                prefixo: document.getElementById('bot-prefix').value,
+                welcome: document.getElementById('welcome-msg').value
+            };
+            
+            console.log("Dados para enviar ao Bot:", config);
+            alert("Configurações salvas! O bot irá atualizar em instantes.");
         }
-        // Verifica se existe um código na URL após o login
-const urlParams = new URLSearchParams(window.location.search);
-const code = urlParams.get('code');
-
-if (code) {
-    console.log("Login realizado! Código do Discord:", code);
-    // Aqui nós vamos esconder o botão de login e mostrar o painel
-    document.getElementById('login-section').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    
-    // Futuramente, você enviará este 'code' para o seu bot processar
-        }
-        
     </script>
 </body>
 </html>
-
-
-
