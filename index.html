@@ -79,6 +79,20 @@
             alert("As configurações foram enviadas para o seu banco de dados!");
             // Aqui entra a integração com Firebase ou sua API em Python
         }
+        // Verifica se existe um código na URL após o login
+const urlParams = new URLSearchParams(window.location.search);
+const code = urlParams.get('code');
+
+if (code) {
+    console.log("Login realizado! Código do Discord:", code);
+    // Aqui nós vamos esconder o botão de login e mostrar o painel
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    
+    // Futuramente, você enviará este 'code' para o seu bot processar
+        }
+        
     </script>
 </body>
 </html>
+
