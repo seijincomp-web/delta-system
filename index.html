@@ -141,6 +141,113 @@
         }
     </script>
 </body>
+</html>
+        .logo { font-weight: bold; font-size: 1.6rem; color: var(--primary); }
+
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        p { color: #94a3b8; margin-bottom: 30px; }
+
+        .btn-login {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 35px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+            box-shadow: 0 0 15px var(--glow);
+        }
+
+        .btn-login:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--primary);
+        }
+
+        #dashboard {
+            display: none;
+            width: 90%;
+            max-width: 850px;
+            padding: 40px 0;
+        }
+
+        .config-card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .btn-save {
+            background: #22c55e;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Style-Bots</div>
+    </nav>
+
+    <section class="hero" id="login-section">
+        <h1>Gerencie seu Bot</h1>
+        <p>Economia, Boas-vindas e muito mais.</p>
+        <a href="https://discord.com/oauth2/authorize?client_id=1474354215957565541&response_type=code&redirect_uri=https%3A%2F%2Fseijincomp-web.github.io%2Fstyle-bots%2F&scope=identify+guilds" class="btn-login">
+            Conectar com Discord
+        </a>
+    </section>
+
+    <section id="dashboard">
+        <h2>Bem-vindo ao Painel</h2>
+        <div class="config-card">
+            <h3>💰 Economia</h3>
+            <label>Nome da Moeda:</label>
+            <input type="text" id="coin-name" placeholder="Ex: StyleCoins">
+        </div>
+        <div class="config-card">
+            <h3>👋 Boas-Vindas</h3>
+            <label>Mensagem de Entrada:</label>
+            <input type="text" id="welcome-msg" placeholder="Seja bem-vindo!">
+        </div>
+        <button class="btn-save" onclick="salvar()">SALVAR CONFIGURAÇÕES</button>
+    </section>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('code')) {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+        }
+
+        function salvar() {
+            alert("Configurações enviadas! Agora o Bot vai ler esses dados.");
+        }
+    </script>
+</body>
 </html>    <section class="hero" id="login-area">
         <h1>Gerencie seu Bot</h1>
         <p>Economia e Boas-Vindas em um só lugar.</p>
@@ -353,6 +460,7 @@
     </script>
 </body>
 </html>
+
 
 
 
