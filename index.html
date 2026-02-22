@@ -3,38 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Style-Bots | Dashboard</title>
+    <title>Style-Bots | Painel</title>
     <style>
-        :root {
-            --primary: #5865F2;
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text: #f8fafc;
-            --glow: rgba(88, 101, 242, 0.5);
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
+        :root { --primary: #5865F2; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        
         /* Navbar */
-        nav {
-            width: 100%;
-            padding: 1.5rem 2rem;
-            background: #1e293b70;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-sizing: border-box;
-            border-bottom: 1px solid #334155;
+        nav { width: 100%; padding: 1rem 2rem; background: #1e293b; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; box-sizing: border-box; }
+        .logo { font-weight: bold; font-size: 1.5rem; color: var(--primary); text-shadow: 0 0 10px rgba(88,101,242,0.3); }
+
+        /* Estilo do Botão com Brilho */
+        .hero { text-align: center; padding: 100px 20px; }
+        .btn-discord { 
+            background: var(--primary); color: white; padding: 15px 35px; border-radius: 10px; 
+            text-decoration: none; font-weight: bold; font-size: 1.1rem; 
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); transition: 0.3s; display: inline-block;
         }
+        .btn-discord:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--primary); }
+
+        /* Dashboard */
+        #dashboard { display: none; width: 90%; max-width: 800px; padding: 40px 0; }
+        .card { background: var(--card); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #334155; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #334155; background: #0f172a; color: white; }
+        .save-btn { background: #22c55e; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Style-Bots</div>
+    </nav>
+
+    <section class="hero" id="login-area">
+        <h1>Gerencie seu Bot</h1>
+        <p>Economia e Boas-Vindas em um só lugar.</p>
+        <br>
+        <a id="login-link" href="#" class="btn-discord">Login com Discord</a>
+    </section>
+
+    <section id="dashboard">
+        <h2>Configurações do Servidor</h2>
+        <div class="card">
+            <h3>💰 Sistema de Economia</h3>
+            <label>Nome da Moeda:</label>
+            <input type="text" id="coin" placeholder="Ex: StyleCoins">
+        </div>
+        <div class="card">
+            <h3>👋 Boas-Vindas</h3>
+            <label>Mensagem de Entrada:</label>
+            <input type="text" id="welcome" placeholder="Bem-vindo ao servidor!">
+        </div>
+        <button class="save-btn" onclick="salvar()">Salvar no Bot</button>
+    </section>
+
+    <script>
+        // O LINK CORRIGIDO (TUDO EM MINÚSCULO PARA O GITHUB)
+        const CLIENT_ID = "1474354215957565541";
+        const REDIRECT = encodeURIComponent("https://seijincomp-web.github.io/style-bots/");
+        const discordLink = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT}&scope=identify+guilds`;
+        
+        document.getElementById('login-link').href = discordLink;
+
+        // Verifica se o usuário voltou do login
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('code')) {
+            document.getElementById('login-area').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+        }
+
+        function salvar() {
+            alert("Enviando para o Pydroid...");
+            // Aqui faremos a conexão com o Firebase depois
+        }
+    </script>
+</body>
+</html>        }
 
         .logo { font-weight: bold; font-size: 1.8rem; color: var(--primary); text-shadow: 0 0 10px var(--glow); }
 
@@ -203,4 +246,5 @@
     </script>
 </body>
 </html>
+
 
